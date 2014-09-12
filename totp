@@ -7,11 +7,13 @@ def allow():
 	print 'accepted'
 	# run bash/zsh
 	call(["exec","-l","$SHELL"],shell=true)
+	# exit with true
 	exit(0)
 
 def deny():
 	call(["clear"])
 	print 'denied'
+	# exit with error
 	exit(1)
 
 try:
