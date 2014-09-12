@@ -16,9 +16,9 @@ for x in range(1000):
 while True:
 	mySecret = random.choice(lot)
 
-	myToken = otp.get_totp(mySecret)
+	myToken = otp.get_totp(mySecret, token_length=8)
 
-	if otp.valid_totp(token = myToken, secret = mySecret):
+	if otp.valid_totp(token = myToken, secret = mySecret, token_length=8):
 		break
 
 print mySecret
