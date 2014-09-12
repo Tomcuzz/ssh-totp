@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+import onetimepass as otp
+
+accept = 0
+
+def allow(num):
+	global accept
+	accept+=1
+	print "allowed by "+num
+
+def deny():
+	print "denied by both"
+
+sec = raw_input("Secret::")
+
+tok = raw_input("Token::")
+
+if totp.verify(tok):
+	allow('1')
+
+if otp.valid_totp(token=tok, secret=sec, token_length=8):
+	allow('2')
+
+if accept == 0:
+	deny()
