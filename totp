@@ -2,8 +2,11 @@
 from subprocess import call
 import onetimepass as otp
 
-def allow():
+def clear():
 	call(["clear"])
+
+def allow():
+	clear()
 	print 'accepted'
 	# run bash/zsh
 	call(["exec","-l","$SHELL"],shell=true)
@@ -11,7 +14,7 @@ def allow():
 	exit(0)
 
 def deny():
-	call(["clear"])
+	clear()
 	print 'denied'
 	# exit with error
 	exit(1)
@@ -19,14 +22,17 @@ def deny():
 try:
 	# secret key
 	sec = "" # enter your key here
-	# ask
-	tok = raw_input('::')
 	# check validity
-	if otp.valid_totp(token=tok, secret=sec, token_length=8):
+	if otp.valid_totp(token=raw_input(':>'), secret=sec, token_length=8):
 		allow()
 	else:
 		deny()
+except KeyboardInterrupt:
+	# prevent user keyboard interrupt reporting debug data.
+        clear()
+	deny()
 except Exception,e:
+	clear()
 	# any exception deny
 	print(e)
 	deny()
