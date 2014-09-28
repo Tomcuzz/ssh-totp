@@ -1,15 +1,15 @@
 #!/usr/bin/env python
-from subprocess import call
+from subprocess import call, Popen, PIPE, STDOUT
 import onetimepass as otp
 
 def clear():
-	call(["clear"])
+	Popen(["clear"])
 
 def allow():
 	clear()
 	print 'accepted'
 	# run bash/zsh
-	call(["exec","-l","$SHELL"],shell=true)
+	Popen(["/bin/bash"], shell=True) # change default script if wished
 	# exit with true
 	exit(0)
 
@@ -20,10 +20,13 @@ def deny():
 	exit(1)
 
 try:
+	# check what user
+	whoami = Popen(["whoami"], stdout=PIPE, stderr=PIPE)
+	username = whoami.stdout.read().split("\n")[0]
 	# secret key
-	sec = "" # enter your key here
+	secretdb = {"username":"secret"} # format = "username":"secretkey", "username1":"secret1"
 	# check validity
-	if otp.valid_totp(token=raw_input(':>'), secret=sec, token_length=8):
+	if otp.valid_totp(token=raw_input(':>'), secret=secretdb[username], token_length=8):
 		allow()
 	else:
 		deny()
