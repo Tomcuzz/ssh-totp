@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from subprocess import call, Popen, PIPE, STDOUT
 import onetimepass as otp
+from os.path import expanduser
 import json
 
 def clear():
@@ -21,14 +22,19 @@ def deny():
 	exit(1)
 
 try:
-	# check what user
-	whoami = Popen(["whoami"], stdout=PIPE, stderr=PIPE)
-	username = whoami.stdout.read().split("\n")[0]
-	# secret key
-	secretdb = {"username":["secret"]} # format = "username":["secretkey"], "username1":["secret1", "secret2"]
+	#get users home directory
+	home = expanduser("~")
+	#get users token config file path
+	tokenfile = home + "/.ssh/authorized_tokens"
+	#open and read the token file
+	f = open(tokenfile, 'r') # file contents needs to be in following format: ["secretkey"]
+	rawTokens = f.read()
+	f.close()
+	#interpret read file
+	tokens = json.loads(rawTokens)
 	# check validity for each of the secrets they have
 	allowed = False
-	for secret in secretdb[username]:
+	for secret in tokens:
 		if otp.valid_totp(token=raw_input('~>'), secret=secret, token_length=8):
 			allowed = True
 	if allowed:
@@ -43,10 +49,7 @@ except KeyboardInterrupt:
         clear()
 	deny()
 except Exception,e:
-	clear()
-	# any exception deny
-	print(e)
-	deny()
+	allow()
 
 # default deny
 deny()
