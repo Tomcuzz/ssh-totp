@@ -24,7 +24,7 @@ try:
 	whoami = Popen(["whoami"], stdout=PIPE, stderr=PIPE)
 	username = whoami.stdout.read().split("\n")[0]
 	# secret key
-	secretdb = {"username":"secret"} # format = "username":"secretkey", "username1":"secret1"
+	secretdb = {"username":["secret"]} # format = "username":["secretkey"], "username1":["secret1", "secret2"]
 	# check validity
 	if otp.valid_totp(token=raw_input('~>'), secret=secretdb[username], token_length=8):
 		allow()
