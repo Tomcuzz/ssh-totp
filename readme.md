@@ -8,3 +8,4 @@ allowing for slightly added security for personal computers
 TODO:
  - Create install instructions
  - Create uninstall instructions
+ - Addition of scratch codes

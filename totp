@@ -27,14 +27,14 @@ try:
 	#get users token config file path
 	tokenfile = home + "/.ssh/authorized_tokens"
 	#open and read the token file
-	f = open(tokenfile, 'r') # file contents needs to be in following format: ["secretkey"]
+	f = open(tokenfile, 'r') # file contents needs to be in following format: {"secrets":["secretkey"]}
 	rawTokens = f.read()
 	f.close()
 	#interpret read file
 	tokens = json.loads(rawTokens)
 	# check validity for each of the secrets they have
 	allowed = False
-	for secret in tokens:
+	for secret in tokens["secrets"]:
 		if otp.valid_totp(token=raw_input('~>'), secret=secret, token_length=8):
 			allowed = True
 	if allowed:
