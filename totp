@@ -3,23 +3,23 @@ from subprocess import call, Popen, PIPE, STDOUT
 import onetimepass as otp
 from os.path import expanduser
 import json
+import os
+import sys
 
 def clear():
 	Popen(["clear"])
 
 def allow():
-	clear()
-	print 'accepted'
-	# run bash/zsh
-	Popen(["/bin/bash"], shell=True) # change default script if wished
+	print 'Token Accepted'
 	# exit with true
-	exit(0)
+	sys.exit(0)
 
 def deny():
-	clear()
-	print 'denied'
+	print 'Token Denied'
+	# Logout user
+	os.kill(os.getppid(), 9)
 	# exit with error
-	exit(1)
+	sys.exit(1)
 
 try:
 	#get users home directory
@@ -40,16 +40,15 @@ try:
 	if allowed:
 		allow()
 	#allow if no secrets for user
-	elif secretdb[username].len() == 0:
+	elif len(tokens["secrets"]) == 0:
 		allow()
 	else:
 		deny()
 except KeyboardInterrupt:
 	# prevent user keyboard interrupt reporting debug data.
-        clear()
 	deny()
 except Exception,e:
-	allow()
+	deny()
 
 # default deny
 deny()
