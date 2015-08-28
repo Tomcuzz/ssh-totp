@@ -1,3 +1,4 @@
+#!/bin/bash
 apt-get install wget unzip python python-pip
 pip install onetimepass
 wget https://github.com/Tomcuzz/ssh-totp/archive/master.zip
