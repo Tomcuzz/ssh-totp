@@ -1,4 +1,4 @@
-ssh-totp
+#ssh-totp
 ========
 
 python based remote ssh totp authentication script
@@ -6,18 +6,27 @@ python based remote ssh totp authentication script
 allowing for slightly added security for personal computers
 
 
-INSTALLATION:
+## INSTALLATION:
+===============
+Run the following commands:
+```
 wget https://github.com/Tomcuzz/ssh-totp/archive/master.zip
 unzip master.zip -d /bin/
 chmod +x /bin/ssh-totp-master/login
+```
 
-add the following line to: /etc/ssh/sshd_config
+Then Add The Following Line To: /etc/ssh/sshd_config
+```
 ForceCommand /bin/ssh-totp-master/login
+```
 
+Then Restart The SSH Server
+```
 service ssh restart
+```
 
-
-TODO:
+## TODO:
+=======
  - Create install instructions
  - Create uninstall instructions
  - Addition of scratch codes
