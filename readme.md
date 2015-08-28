@@ -21,7 +21,28 @@ Then Restart The SSH Server
 ```
 service ssh restart
 ```
+
+## UNSTALLATION:
+Remove The Following Line From: /etc/ssh/sshd_config
+```
+ForceCommand /bin/ssh-totp-master/login
+```
+
+Then Restart The SSH Server
+```
+service ssh restart
+```
+
+Then Run the following commands:
+```
+rm -rf /bin/ssh-totp-master/
+```
+
+Then To Remove All Of the User's Secret's remove all of the files at the following location in their home folder:
+```
+.ssh/authorized_tokens
+```
+
 ## TODO:
- - Create install instructions
- - Create uninstall instructions
+ - Update Install instructions to include secret generation
  - Addition of scratch codes
