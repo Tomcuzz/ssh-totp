@@ -4,7 +4,6 @@ Python based remote ssh totp authentication script
 
 Allowing for slightly added security for personal computers
 
-==============
 ## INSTALLATION:
 Run the following commands:
 ```
@@ -22,7 +21,6 @@ Then Restart The SSH Server
 ```
 service ssh restart
 ```
-=======
 ## TODO:
  - Create install instructions
  - Create uninstall instructions
