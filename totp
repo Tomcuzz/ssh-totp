@@ -32,17 +32,31 @@ try:
 	f.close()
 	#interpret read file
 	tokens = json.loads(rawTokens)
+	#allow if no secrets for user
+	if len(tokens["secrets"]) == 0:
+		allow()
+	
+except KeyboardInterrupt:
+	# prevent user keyboard interrupt reporting debug data.
+	deny()
+except Exception,e:
+	#allow user in... as this will fail if they have no authorised tokens... meaning they havent set up two factor authentication
+	allow()
+	
+try:
 	# check validity for each of the secrets they have
 	allowed = False
-	for secret in tokens["secrets"]:
-		if otp.valid_totp(token=raw_input('~>'), secret=secret, token_length=8):
-			allowed = True
-	if allowed:
-		allow()
-	#allow if no secrets for user
-	elif len(tokens["secrets"]) == 0:
-		allow()
-	else:
+	#Setup max try variable
+	trys = 0
+	while trys < 3:
+		if trys != 0:
+			print 'Token Denied Please Try Again'
+		for secret in tokens["secrets"]:
+			if otp.valid_totp(token=raw_input('~>'), secret=secret, token_length=8):
+				allow()
+				break
+				break
+	if not allowed:
 		deny()
 except KeyboardInterrupt:
 	# prevent user keyboard interrupt reporting debug data.
