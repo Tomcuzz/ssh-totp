@@ -38,7 +38,7 @@ Then Run the following commands:
 rm -rf /bin/ssh-totp-master/
 ```
 
-Then To Remove All Of the User's Secret's remove all of the files at the following location in their home folder:
+Then To Remove All Of the User's Secret's Remove The Following File In All Of The Home Folders:
 ```
 .ssh/authorized_tokens
 ```
