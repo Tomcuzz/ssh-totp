@@ -10,7 +10,6 @@ def clear():
 	Popen(["clear"])
 
 def allow():
-	print 'Token Accepted'
 	# exit with true
 	sys.exit(0)
 
@@ -40,6 +39,7 @@ except KeyboardInterrupt:
 	# prevent user keyboard interrupt reporting debug data.
 	deny()
 except Exception,e:
+	print 'Two-Factor Authentication Not Enabled'
 	#allow user in... as this will fail if they have no authorised tokens... meaning they havent set up two factor authentication
 	allow()
 	
@@ -53,6 +53,7 @@ try:
 			print 'Token Denied Please Try Again'
 		for secret in tokens["secrets"]:
 			if otp.valid_totp(token=raw_input('Please Enter Two-Factor Token: '), secret=secret, token_length=6):
+				print 'Token Accepted'
 				allow()
 		trys = trys + 1
 	if not allowed:
