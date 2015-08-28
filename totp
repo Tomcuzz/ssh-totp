@@ -52,10 +52,9 @@ try:
 		if trys != 0:
 			print 'Token Denied Please Try Again'
 		for secret in tokens["secrets"]:
-			if otp.valid_totp(token=raw_input('~>'), secret=secret, token_length=8):
+			if otp.valid_totp(token=raw_input('Please Enter Two-Factor Token: '), secret=secret, token_length=8):
 				allow()
-				break
-				break
+		trys = trys + 1
 	if not allowed:
 		deny()
 except KeyboardInterrupt:
